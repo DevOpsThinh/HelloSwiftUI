@@ -8,33 +8,39 @@
 import SwiftUI
 
 struct ContentView: View {
-    
-    // a state variable: count
-    @State var count: Int = 0
+    ///*****************************************///
+    ///                State variables             ///
+    ///*****************************************///
+    @State private var weightText: String = ""
+    @State private var heightText: String = ""
+    @State private var bmi: Double = 0
     
     var body: some View {
-        HStack{
-            ZStack{
-                Circle()
-                    .fill(Color.orange)
-                
-                Button(action:{
-                    self.count += 1
-                }){
-                    Text("Increment")
-                }
-            }
-            .frame(width: 100.0, height: 100.0)
+        VStack {
+            Text("BMI Calculator:").font(.largeTitle).foregroundColor(Color.blue)
+            TextField("Enter Weight (in kilograms)", text: $weightText)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .border(Color.orange)
             
-            VStack(alignment:.leading, spacing: 4){
-                Text("Count: \(count)")
-                    .font(.largeTitle)
-                    .foregroundColor(Color.black)
-                Text("Truong Thinh, 2021")
+            TextField("Enter Height (in meters)", text: $heightText)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .border(Color.orange)
+            
+            Button(action:{
+                let wei = Double(self.weightText)!
+                let hei = Double(self.heightText)!
+                self.bmi = wei/(hei * hei)
+            }){
+                Text("Calculate BMI")
                     .fontWeight(.bold)
-                    .foregroundColor(Color.gray)
+                    .padding()
+                    .foregroundColor(.white)
+                    .background(Color.orange)
             }
-        }
+            
+            Text("BMI: \(bmi)").font(.title).foregroundColor(Color.gray).padding()
+            
+        }.padding()
     }
 }
 
